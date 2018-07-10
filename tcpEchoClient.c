@@ -2,7 +2,7 @@
  * @Author: LQT
  * @Date: 2018-07-10 14:43:09
  * @LastEditors: LQT
- * @LastEditTime: 2018-07-10 17:25:30
+ * @LastEditTime: 2018-07-10 18:33:45
  * @Description: 
  */
 #include<uv.h>
@@ -31,7 +31,7 @@ void alloc_buffer(uv_handle_t *handle,size_t suggested_size,uv_buf_t *buf){
     return;
 }
 
-void echo_write(uv_write_t *req,int status){
+void echo_write(uv_write_t* req, int status){
     if(status){
         fprintf(stderr,"write error%s\n",uv_strerror(status));
     }
@@ -48,9 +48,9 @@ void echo_read(uv_stream_t *client,ssize_t nread,const uv_buf_t *buf){
 
 
 void on_connect(uv_connect_t *connect,int status){
-    uv_tcp_t *client=(uv_tcp_t*)malloc(sizeof(uv_tcp_t));
-    client=(uv_tcp_t*)connect->handle;
-    uv_tcp_init(loop,client);
+    uv_stream_t*client=(uv_stream_t*)malloc(sizeof(uv_tcp_t));
+    client=connect->handle;
+    uv_tcp_init(loop,(uv_tcp_t*)client);
     
     char input;
     scanf("%s",&input);
